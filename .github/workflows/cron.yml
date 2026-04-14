@@ -1,0 +1,18 @@
+name: Hourly Quote Trigger
+
+on:
+  schedule:
+    # 這是 UTC 時間，0 * * * * 代表每小時的 0 分觸發
+    - cron: '0 * * * *'
+  # 加上這個指令，可以讓你在 GitHub 網頁上手動點擊「Run workflow」來測試！
+  workflow_dispatch: 
+
+jobs:
+  ping-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Vercel Cron API
+        run: |
+          # 請把下面的網址換成你真實的 Vercel 網址
+          curl -X GET "https://你的專案名稱.vercel.app/api/cron" \
+          -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}"
